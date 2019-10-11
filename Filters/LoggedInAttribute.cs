@@ -6,21 +6,21 @@ using System.Linq;
 
 namespace LoggedIn.Filters
 {
-    public class LoggedInAttribute : ActionFilterAttribute
+public class LoggedInAttribute : ActionFilterAttribute
+{
+    public override void OnActionExecuting(ActionExecutingContext context)
     {
-        public override void OnActionExecuting(ActionExecutingContext context)
+        var uId = context.HttpContext.Session.GetInt32("userId");
+        var uName = context.HttpContext.Session.GetString("userName");
+        if(uId == null)
         {
-            var uId = context.HttpContext.Session.GetInt32("userId");
-            var uName = context.HttpContext.Session.GetString("userName");
-            if(uId == null)
-            {
-                context.Result = new RedirectToActionResult("Index", "Home", null);
-            }
-            else
-            {
-                ((Controller)context.Controller).ViewBag.Username = uName;
-            }
+            context.Result = new RedirectToActionResult("Index", "Home", null);
         }
-
+        else
+        {
+            ((Controller)context.Controller).ViewBag.Username = uName;
+        }
     }
+
+}
 }

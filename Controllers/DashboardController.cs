@@ -17,7 +17,7 @@ namespace LoggedIn.Controllers
             get { return dbContext.Users.FirstOrDefault(u => u.UserId == HttpContext.Session.GetInt32("userId")); }
         } 
         private DashboardContext dbContext;
-        public DashboardController(DashboardContext context, ISessionStore sesh)
+        public DashboardController(DashboardContext context)
         {
             dbContext = context;
         }
